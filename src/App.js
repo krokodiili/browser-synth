@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
 import OscSelector from './components/OscSelector'
 import DurationSelector from './components/DurationSelector'
 import Synth from './containers/Synth'
-const context = new AudioContext();
 
 class App extends Component {
   state = {
@@ -20,11 +18,11 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
           <Synth osc={osc} soundDuration={soundDuration}/>
+          <div style={{marginLeft: 10}}>
           <DurationSelector value={soundDuration} onChange={this.handleChange('soundDuration')}/>
           <OscSelector selected={osc} onChange={this.handleChange('osc')}/>
-        </header>
+          </div>
       </div>
     );
   }
