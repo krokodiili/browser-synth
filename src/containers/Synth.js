@@ -1,14 +1,13 @@
 import React, { PureComponent } from 'react';
-const context = new AudioContext();
+import SynthView from '../components/Synth'
 
 class Synth extends PureComponent {
     handleKeyPress = event => {
+        const context = new AudioContext();
         const { osc, soundDuration } = this.props
         const o = context.createOscillator();
         const g = context.createGain();
         o.type = osc;
-
-        console.log(soundDuration)
 
         let frequency = () => {
             switch (event.key) {
@@ -48,14 +47,17 @@ class Synth extends PureComponent {
         g.connect(context.destination);
         o.start(0);
         g.gain.exponentialRampToValueAtTime(
-            0.00001, context.currentTime + soundDuration
+            0.00001, context.currentTime + soundDuration / 10
         );
     }
 
     render() {
 
         return (
-            <input type="text" onKeyPress={this.handleKeyPress} />
+            <div>
+                <SynthView />
+                <input type="text" onKeyPress={this.handleKeyPress} style={{marginLeft: 10}}/>
+            </div>
         );
     }
 }
