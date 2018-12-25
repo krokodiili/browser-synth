@@ -4,6 +4,7 @@ import WhiteKey from './WhiteKey';
 import DisplayScreen from './DisplayScreen';
 import PowerSwitch from './PowerSwitch';
 import Knobs from './Knobs';
+import BlackKey from './BlackKey';
 
 const RootWrapper = styled.div`
     padding: 10px;
@@ -35,24 +36,20 @@ export default () => (
             <Knobs />
         </ControlWrapper>
         <KeyWrapper>
+        <WhiteKey extend={"right"}/>
+        <BlackKey />
+        <WhiteKey extend={"left"}/>
+        <BlackKey />
         <WhiteKey />
+        <WhiteKey extend={"right"}/>
+        <BlackKey />
+        <WhiteKey extend={"left"}/>
+        <BlackKey />
+        <WhiteKey extend={"right"}/>
+        <BlackKey />
+        <WhiteKey extend={"left"}/>
         <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
-        <WhiteKey />
+
         </KeyWrapper>
     </RootWrapper>
 )
