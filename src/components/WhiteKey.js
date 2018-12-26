@@ -7,9 +7,18 @@ const RootWrapper = styled.div`
   height: 14em;
   cursor: pointer;
   border: 1px solid black;
+  box-shadow: ${({ pressed }) => (pressed ? 'inset 0 0 10px #000000' : '')};
   color: black;
   z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
   margin-left: ${({ noMargin }) => (noMargin ? '0' : '-1em')};
 `;
 
-export default ({ noMargin }) => <RootWrapper noMargin={noMargin} />;
+export default ({ noMargin, pressed, keyForNote }) => (
+  <RootWrapper noMargin={noMargin} pressed={pressed}>
+    {keyForNote}
+  </RootWrapper>
+);
