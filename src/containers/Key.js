@@ -13,6 +13,17 @@ class Synth extends Component {
     options: { type: this.props.soundType, frequency: this.props.frequency }
   });
 
+  componentDidUpdate = prevProps => {
+    const { frequency } = this.props;
+    if (frequency !== prevProps.frequency) {
+      this.sound.stop();
+      this.sound = new Pizzicato.Sound({
+        source: 'wave',
+        options: { type: this.props.soundType, frequency: frequency }
+      });
+    }
+  };
+
   componentDidMount = () => {
     const { keyForNote } = this.props;
     document.body.addEventListener('keydown', event => {
@@ -41,6 +52,7 @@ class Synth extends Component {
   render() {
     const { playing } = this.state;
     const { variant, noMargin, keyForNote } = this.props;
+
     if (variant === 'white') {
       return (
         <WhiteKey
