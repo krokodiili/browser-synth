@@ -16,21 +16,106 @@ const KeyWrapper = styled.div`
   display: flex;
 `;
 
-export default () => (
+const c = '130.81';
+const cSharp = '138.59';
+const d = '146.83';
+const dSharp = '155.56';
+const e = '164.81';
+const f = '174.61';
+const fSharp = '185.00';
+const g = '196.00';
+const gSharp = '207.65';
+const a = '220.0';
+const aSharp = '233.08';
+const b = '246.94';
+
+export default ({ selectedOctave }) => (
   <RootWrapper>
     <KeyWrapper>
-      <Key variant="white" keyForNote="q" frequency="261.6" noMargin />
-      <Key variant="black" keyForNote="2" frequency="277.2" />
-      <Key variant="white" keyForNote="w" frequency="293.7" />
-      <Key variant="black" keyForNote="3" frequency="311.1" />
-      <Key variant="white" keyForNote="e" frequency="329.6" />
-      <Key variant="white" keyForNote="r" frequency="349.2" noMargin />
-      <Key variant="black" keyForNote="5" frequency="370.0" />
-      <Key variant="white" keyForNote="t" frequency="392.0" />
-      <Key variant="black" keyForNote="6" frequency="415.3" />
-      <Key variant="white" keyForNote="y" frequency="440.0" />
-      <Key variant="black" keyForNote="7" frequency="466.2" />
-      <Key variant="white" keyForNote="u" frequency="493.3" />
+      <Key
+        variant="white"
+        keyForNote="z"
+        frequency={c * selectedOctave}
+        noMargin
+      />
+      <Key variant="black" keyForNote="s" frequency={cSharp * selectedOctave} />
+      <Key variant="white" keyForNote="x" frequency={d * selectedOctave} />
+      <Key variant="black" keyForNote="d" frequency={dSharp * selectedOctave} />
+      <Key variant="white" keyForNote="c" frequency={e * selectedOctave} />
+      <Key
+        variant="white"
+        keyForNote="v"
+        frequency={f * selectedOctave}
+        noMargin
+      />
+      <Key variant="black" keyForNote="g" frequency={fSharp * selectedOctave} />
+      <Key variant="white" keyForNote="b" frequency={g * selectedOctave} />
+      <Key variant="black" keyForNote="h" frequency={gSharp * selectedOctave} />
+      <Key variant="white" keyForNote="n" frequency={a * selectedOctave} />
+      <Key variant="black" keyForNote="j" frequency={aSharp * selectedOctave} />
+      <Key variant="white" keyForNote="m" frequency={b * selectedOctave} />
+
+      <Key
+        variant="white"
+        keyForNote="q"
+        frequency={c * 2 * selectedOctave}
+        noMargin
+      />
+      <Key
+        variant="black"
+        keyForNote="2"
+        frequency={cSharp * 2 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="w" frequency={d * 2 * selectedOctave} />
+      <Key
+        variant="black"
+        keyForNote="3"
+        frequency={dSharp * 2 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="e" frequency={e * 2 * selectedOctave} />
+      <Key
+        variant="white"
+        keyForNote="r"
+        frequency={f * 2 * selectedOctave}
+        noMargin
+      />
+      <Key
+        variant="black"
+        keyForNote="5"
+        frequency={fSharp * 2 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="t" frequency={g * 2 * selectedOctave} />
+      <Key
+        variant="black"
+        keyForNote="6"
+        frequency={gSharp * 2 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="y" frequency={a * 2 * selectedOctave} />
+      <Key
+        variant="black"
+        keyForNote="7"
+        frequency={aSharp * 2 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="u" frequency={b * 2 * selectedOctave} />
+
+      <Key
+        variant="white"
+        keyForNote="i"
+        frequency={c * 4 * selectedOctave}
+        noMargin
+      />
+      <Key
+        variant="black"
+        keyForNote="9"
+        frequency={cSharp * 4 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="o" frequency={d * 4 * selectedOctave} />
+      <Key
+        variant="black"
+        keyForNote="0"
+        frequency={dSharp * 4 * selectedOctave}
+      />
+      <Key variant="white" keyForNote="p" frequency={e * 4 * selectedOctave} />
     </KeyWrapper>
   </RootWrapper>
 );
