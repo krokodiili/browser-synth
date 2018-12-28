@@ -9,7 +9,7 @@ const RootWrapper = styled.div`
   color: #fff;
   box-shadow: 0 8px 6px -6px black;
   border: 1px solid black;
-  background-color: #f1f1f1;
+  background-color: #444;
 `;
 
 const KeyWrapper = styled.div`
@@ -31,6 +31,12 @@ const b = '246.94';
 
 export default ({ selectedOctave }) => (
   <RootWrapper>
+    <span role="img" aria-label="logo" style={{ fontSize: 50 }}>
+      🐊
+    </span>
+
+    <hr />
+
     <KeyWrapper>
       <Key
         variant="white"

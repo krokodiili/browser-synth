@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const RootWrapper = styled.div`
-  background-color: white;
+  background-color: #f1f1f1;
   width: 4em;
   height: 14em;
   cursor: pointer;

@@ -25,10 +25,8 @@ class App extends Component {
   render() {
     const { osc, soundDuration, selectedOctave } = this.state;
 
-    console.log('asd', selectedOctave);
-
     return (
-      <div className="App">
+      <div>
         <Synth
           osc={osc}
           soundDuration={soundDuration}
