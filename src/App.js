@@ -3,6 +3,7 @@ import OscSelector from './components/OscSelector';
 import DurationSelector from './components/DurationSelector';
 import Synth from './containers/Synth';
 import OctaveSelector from './components/OctaveSelector';
+import Knob from './containers/Knob';
 
 class App extends Component {
   state = {
@@ -43,6 +44,7 @@ class App extends Component {
             onChange={this.handleOctaveChange}
             value={selectedOctave}
           />
+          <Knob />
         </div>
       </div>
     );
