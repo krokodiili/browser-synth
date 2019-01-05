@@ -3,7 +3,7 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   height: 100vh;
   background-image: url('/bg.jpg');
   background-size: cover;
