@@ -8,13 +8,20 @@ class Synth extends Component {
     playing: false
   };
 
+  reverb = new Pizzicato.Effects.Reverb({
+    time: 1,
+    decay: 0.8,
+    reverse: true,
+    mix: 0.5
+  });
   sound = new Pizzicato.Sound({
     source: 'wave',
+
     options: { type: this.props.soundType, frequency: this.props.frequency }
   });
 
   componentDidUpdate = prevProps => {
-    const { frequency } = this.props;
+    const { frequency, soundType } = this.props;
     if (frequency !== prevProps.frequency) {
       this.sound.stop();
       this.sound = new Pizzicato.Sound({
@@ -22,10 +29,18 @@ class Synth extends Component {
         options: { type: this.props.soundType, frequency: frequency }
       });
     }
+    if (soundType !== prevProps.soundType) {
+      this.sound = new Pizzicato.Sound({
+        source: 'wave',
+
+        options: { type: this.props.soundType, frequency: this.props.frequency }
+      });
+    }
   };
 
   componentDidMount = () => {
     const { keyForNote } = this.props;
+    this.sound.addEffect(this.reverb);
     document.body.addEventListener('keydown', event => {
       if (event.key === keyForNote) {
         this.playNote();

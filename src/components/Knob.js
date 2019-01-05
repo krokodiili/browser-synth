@@ -7,22 +7,13 @@ const RootWrapper = styled.div`
   align-items: center;
 `;
 
-const Outside = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #111;
-  border-radius: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Knob = styled.div`
   cursor: pointer;
-`;
-
-const Inside = styled.div`
-  width: 70px;
-  height: 70px;
-  background: #222;
+  border: 3px solid #242424;
+  width: 100px;
   border-radius: 100%;
+  background-image: radial-gradient(50% 150%, #e6e6e6 50%, #000000 100%);
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -31,18 +22,18 @@ const Inside = styled.div`
 
 const Marker = styled.div`
   height: 20px;
-  width: 2px;
-  background-color: #ff0000;
+  width: 5px;
+  margin: 5px;
+  background-color: #242424;
 `;
 
 export default ({ onDrag, degree }) => {
   return (
-    <RootWrapper onMouseDown={onDrag}>
-      <Outside>
-        <Inside degree={degree}>
-          <Marker />
-        </Inside>
-      </Outside>
+    <RootWrapper>
+      <Knob degree={degree} onMouseDown={onDrag}>
+        <Marker />
+      </Knob>
+
       <p> Title </p>
     </RootWrapper>
   );
