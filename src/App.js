@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import OscSelector from './components/OscSelector';
+import SoundSelector from './containers/SoundSelector';
 import DurationSelector from './components/DurationSelector';
-import Synth from './containers/Synth';
+import Synth from './components/Synth';
 import OctaveSelector from './components/OctaveSelector';
 import Knob from './containers/Knob';
+import GlobalStyle from './globalStyles';
 
 class App extends Component {
   state = {
-    osc: 'sine',
-    soundDuration: '1',
+    selectedSound: 'square',
     selectedOctave: 2
   };
 
@@ -23,27 +23,25 @@ class App extends Component {
   };
 
   render() {
-    const { osc, soundDuration, selectedOctave } = this.state;
+    const { selectedSound, selectedOctave } = this.state;
 
     return (
       <div>
-        <Synth
-          osc={osc}
-          soundDuration={soundDuration}
-          selectedOctave={selectedOctave}
-        />
-        <div style={{ marginLeft: 10 }}>
-          <DurationSelector
-            value={soundDuration}
-            onChange={this.handleChange('soundDuration')}
+        <GlobalStyle />
+        <Synth {...this.state}>
+          <SoundSelector
+            selected={selectedSound}
+            onChange={this.handleChange('selectedSound')}
           />
-          <OscSelector selected={osc} onChange={this.handleChange('osc')} />
+          <Knob />
+          <Knob />
+          <Knob />
+          <Knob />
           <OctaveSelector
             onChange={this.handleOctaveChange}
             value={selectedOctave}
           />
-          <Knob />
-        </div>
+        </Synth>
       </div>
     );
   }
