@@ -1,39 +1,50 @@
-import React, { Component } from 'react';
-import SoundSelector from './containers/SoundSelector';
-import DurationSelector from './components/DurationSelector';
-import Synth from './components/Synth';
-import OctaveSelector from './components/OctaveSelector';
-import Knob from './containers/Knob';
-import GlobalStyle from './globalStyles';
+import React, { Component } from "react";
+import SoundSelector from "./containers/SoundSelector";
+import DurationSelector from "./components/DurationSelector";
+import Synth from "./components/Synth";
+import OctaveSelector from "./components/OctaveSelector";
+import Knob from "./components/Knob";
+import GlobalStyle from "./globalStyles";
 
 class App extends Component {
   state = {
-    selectedSound: 'square',
-    selectedOctave: 2
+    selectedSound: "square",
+    selectedOctave: 2,
+    volume: 0.5,
   };
 
-  handleOctaveChange = value => {
+  handleOctaveChange = (value) => {
     if (value > 0 && value < 4) {
       this.setState({ selectedOctave: value });
     }
   };
 
-  handleChange = target => value => {
+  handleChange = (target) => (value) => {
     this.setState({ [target]: value });
   };
 
   render() {
     const { selectedSound, selectedOctave } = this.state;
 
+    console.log(this.state.volume);
     return (
       <div>
         <GlobalStyle />
         <Synth {...this.state}>
           <SoundSelector
             selected={selectedSound}
-            onChange={this.handleChange('selectedSound')}
+            onChange={this.handleChange("selectedSound")}
           />
-          <Knob />
+          <Knob
+            label="Volume"
+            value={this.state.volume}
+            onChange={(value) => {
+              this.setState({
+                ...this.state,
+                volume: value,
+              });
+            }}
+          />
           <Knob />
           <Knob />
           <Knob />

@@ -1,10 +1,9 @@
-import React from 'react';
-import SoundSelector from '../components/SoundSelector';
+import React from "react";
+import SoundSelector from "../components/SoundSelector";
 
 export default ({ selected, onChange }) => {
-  const sounds = ['sine', 'square', 'sawtooth', 'triangle'];
+  const sounds = ["sine", "square", "sawtooth", "triangle"];
   const selectedIndex = sounds.indexOf(selected);
-
   const handleNextSound = () => {
     if (selectedIndex + 1 !== sounds.length) {
       onChange(sounds[selectedIndex + 1]);

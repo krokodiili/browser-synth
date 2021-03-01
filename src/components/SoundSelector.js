@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import SoundSelectorButton from './SoundSelectorButton';
+import React from "react";
+import styled from "styled-components";
+import SoundSelectorButton from "./SoundSelectorButton";
 
 const RootWrapper = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const ScreenWrapper = styled.div`
 `;
 
 const ArcadeText = styled.p`
-  font-family: 'arcade';
+  font-family: "arcade";
   font-size: 20px;
 `;
 
@@ -27,9 +27,9 @@ export default ({ sounds, onNextSound, onPreviousSound, soundIndex }) => {
       <SoundSelectorButton onClick={onPreviousSound} />
       <ScreenWrapper>
         <ArcadeText>
-          {`${soundIndex > 0 ? '<' : '|'}
+          {`${soundIndex > 0 ? "<" : "|"}
             0${soundIndex + 1}: ${sounds[soundIndex].toUpperCase()}
-            ${soundIndex < sounds.length - 1 ? '>' : '|'}
+            ${soundIndex < sounds.length - 1 ? ">" : "|"}
           `}
         </ArcadeText>
       </ScreenWrapper>

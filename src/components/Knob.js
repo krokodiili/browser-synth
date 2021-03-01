@@ -1,40 +1,32 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import { Knob, Arc, Pointer } from "rc-knob";
+import styled from "styled-components";
 
-const RootWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Knob = styled.div`
-  cursor: pointer;
-  border: 3px solid #242424;
-  width: 100px;
-  border-radius: 100%;
-  background-image: radial-gradient(50% 150%, #e6e6e6 50%, #000000 100%);
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  transform: ${({ degree }) => `rotate(${degree}deg)`};
-`;
-
-const Marker = styled.div`
-  height: 20px;
-  width: 5px;
-  margin: 5px;
-  background-color: #242424;
-`;
-
-export default ({ onDrag, degree }) => {
+const SoundKnob = ({ label, value, onChange }) => {
   return (
     <RootWrapper>
-      <Knob degree={degree} onMouseDown={onDrag}>
-        <Marker />
+      <Knob
+        value={value}
+        size={100}
+        angleOffset={220}
+        angleRange={280}
+        min={0}
+        max={1}
+        className="styledKnob"
+        onChange={onChange}
+      >
+        <Arc arcWidth={1.5} />
+        <circle r="40" cx="50" cy="50" />
+        <Pointer width={2} height={35} radius={10} type="rect" color="#fff" />
       </Knob>
-
-      <p> Title </p>
+      <h3>{label}</h3>
     </RootWrapper>
   );
 };
+
+const RootWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export default SoundKnob;

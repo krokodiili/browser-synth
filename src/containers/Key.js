@@ -1,39 +1,43 @@
-import React, { Component } from 'react';
-import BlackKey from '../components/BlackKey';
-import WhiteKey from '../components/WhiteKey';
-import Pizzicato from 'pizzicato';
+import React, { Component } from "react";
+import BlackKey from "../components/BlackKey";
+import WhiteKey from "../components/WhiteKey";
+import Pizzicato from "pizzicato";
 
 class Synth extends Component {
   state = {
-    playing: false
+    playing: false,
   };
 
   reverb = new Pizzicato.Effects.Reverb({
     time: 1,
     decay: 0.8,
     reverse: true,
-    mix: 0.5
+    mix: 0.5,
   });
   sound = new Pizzicato.Sound({
-    source: 'wave',
+    source: "wave",
 
-    options: { type: this.props.soundType, frequency: this.props.frequency }
+    options: this.props.soundSettings,
   });
 
-  componentDidUpdate = prevProps => {
+  //TODO: Setup proper update
+  componentDidUpdate = (prevProps) => {
     const { frequency, soundType } = this.props;
     if (frequency !== prevProps.frequency) {
       this.sound.stop();
       this.sound = new Pizzicato.Sound({
-        source: 'wave',
-        options: { type: this.props.soundType, frequency: frequency }
+        source: "wave",
+        options: { ...this.props.soundSettings, frequency: frequency },
       });
     }
     if (soundType !== prevProps.soundType) {
       this.sound = new Pizzicato.Sound({
-        source: 'wave',
+        source: "wave",
 
-        options: { type: this.props.soundType, frequency: this.props.frequency }
+        options: {
+          ...this.props.soundSettings,
+          frequency: this.props.frequency,
+        },
       });
     }
   };
@@ -41,13 +45,13 @@ class Synth extends Component {
   componentDidMount = () => {
     const { keyForNote } = this.props;
     this.sound.addEffect(this.reverb);
-    document.body.addEventListener('keydown', event => {
+    document.body.addEventListener("keydown", (event) => {
       if (event.key === keyForNote) {
         this.playNote();
       }
     });
 
-    document.body.addEventListener('keyup', event => {
+    document.body.addEventListener("keyup", (event) => {
       if (event.key === keyForNote) {
         this.stopNote();
       }
@@ -68,7 +72,7 @@ class Synth extends Component {
     const { playing } = this.state;
     const { variant, noMargin, keyForNote } = this.props;
 
-    if (variant === 'white') {
+    if (variant === "white") {
       return (
         <WhiteKey
           pressed={playing}
