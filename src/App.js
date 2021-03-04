@@ -8,23 +8,25 @@ import GlobalStyle from "./globalStyles";
 
 class App extends Component {
   state = {
-    selectedSound: "square",
-    selectedOctave: 2,
+    soundType: "square",
+    octave: 2,
     volume: 0.5,
+    attack: 1,
   };
 
   handleOctaveChange = (value) => {
     if (value > 0 && value < 4) {
-      this.setState({ selectedOctave: value });
+      this.setState({ ...this.state, octave: value });
     }
   };
 
   handleChange = (target) => (value) => {
+    console.log(target, value);
     this.setState({ [target]: value });
   };
 
   render() {
-    const { selectedSound, selectedOctave } = this.state;
+    const { soundType, octave } = this.state;
 
     console.log(this.state.volume);
     return (
@@ -32,8 +34,8 @@ class App extends Component {
         <GlobalStyle />
         <Synth {...this.state}>
           <SoundSelector
-            selected={selectedSound}
-            onChange={this.handleChange("selectedSound")}
+            selected={soundType}
+            onChange={this.handleChange("soundType")}
           />
           <Knob
             label="Volume"
@@ -48,10 +50,7 @@ class App extends Component {
           <Knob />
           <Knob />
           <Knob />
-          <OctaveSelector
-            onChange={this.handleOctaveChange}
-            value={selectedOctave}
-          />
+          <OctaveSelector onChange={this.handleOctaveChange} value={octave} />
         </Synth>
       </div>
     );

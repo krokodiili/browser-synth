@@ -16,29 +16,32 @@ class Synth extends Component {
   });
   sound = new Pizzicato.Sound({
     source: "wave",
-
-    options: this.props.soundSettings,
   });
 
   //TODO: Setup proper update
   componentDidUpdate = (prevProps) => {
-    const { frequency, soundType } = this.props;
-    if (frequency !== prevProps.frequency) {
+    const formattedSoundSettings = {
+      ...this.props.soundSettings,
+      type: this.props.soundSettings.soundType,
+    };
+
+    console.log(this.formattedSoundSettings);
+    const { frequency, soundType } = this.props.soundSettings;
+    if (frequency !== prevProps.soundSettings.frequency) {
       this.sound.stop();
       this.sound = new Pizzicato.Sound({
         source: "wave",
-        options: { ...this.props.soundSettings, frequency: frequency },
+        options: formattedSoundSettings,
       });
+      this.sound.addEffect(this.reverb);
     }
-    if (soundType !== prevProps.soundType) {
+    if (soundType !== prevProps.soundSettings.soundType) {
       this.sound = new Pizzicato.Sound({
         source: "wave",
 
-        options: {
-          ...this.props.soundSettings,
-          frequency: this.props.frequency,
-        },
+        options: formattedSoundSettings,
       });
+      this.sound.addEffect(this.reverb);
     }
   };
 
