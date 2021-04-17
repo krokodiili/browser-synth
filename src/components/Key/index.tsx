@@ -52,7 +52,7 @@ const KeyContainer: React.FC<Props> = ({
   }, []);
 
   return (
-    <div>
+    <>
       {variant === "white" ? (
         <WhiteKey
           pressed={pressed}
@@ -62,7 +62,7 @@ const KeyContainer: React.FC<Props> = ({
       ) : (
         <BlackKey pressed={pressed} keyForNote={keyForNote} />
       )}
-    </div>
+    </>
   );
 };
 
