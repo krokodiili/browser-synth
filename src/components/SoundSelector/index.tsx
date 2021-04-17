@@ -1,9 +1,15 @@
 import React from "react";
-import SoundSelector from "../components/SoundSelector";
+import SelectorView from "./SelectorView";
 
-export default ({ selected, onChange }) => {
+interface Props {
+  selected: any;
+  onChange: any;
+}
+
+const SoundSelector: React.FC<Props> = ({ selected, onChange }) => {
   const sounds = ["sine", "square", "sawtooth", "triangle"];
   const selectedIndex = sounds.indexOf(selected);
+
   const handleNextSound = () => {
     if (selectedIndex + 1 !== sounds.length) {
       onChange(sounds[selectedIndex + 1]);
@@ -17,7 +23,7 @@ export default ({ selected, onChange }) => {
   };
 
   return (
-    <SoundSelector
+    <SelectorView
       onNextSound={handleNextSound}
       onPreviousSound={handlePreviousSound}
       soundIndex={selectedIndex}
@@ -25,3 +31,5 @@ export default ({ selected, onChange }) => {
     />
   );
 };
+
+export default SoundSelector;

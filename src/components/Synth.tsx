@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Key from "../containers/Key";
+import { useSynth } from "../state/synth";
+import Key from "./Key";
 
 const ControlPanelWrapper = styled.div`
   display: flex;
@@ -20,21 +21,8 @@ const KeyWrapper = styled.div`
   display: flex;
 `;
 
-const c = "130.81";
-const cSharp = "138.59";
-const d = "146.83";
-const dSharp = "155.56";
-const e = "164.81";
-const f = "174.61";
-const fSharp = "185.00";
-const g = "196.00";
-const gSharp = "207.65";
-const a = "220.0";
-const aSharp = "233.08";
-const b = "246.94";
-
-const Synth = ({ children, ...soundSettings }) => {
-  const { octave } = soundSettings;
+const Synth: React.FC = ({ children }) => {
+  const { octave } = useSynth();
   return (
     <RootWrapper>
       <ControlPanelWrapper>
@@ -44,16 +32,17 @@ const Synth = ({ children, ...soundSettings }) => {
       <hr />
 
       <KeyWrapper>
-        <Key
-          variant="white"
-          keyForNote="z"
-          soundSettings={{
-            ...soundSettings,
-            frequency: c * octave,
-          }}
-          noMargin
-        />
-        <Key
+        <Key variant="white" keyForNote="z" note={`C${octave}`} noMargin />
+        <Key variant="white" keyForNote="x" note={`D${octave}`} noMargin />
+      </KeyWrapper>
+    </RootWrapper>
+  );
+};
+
+export default Synth;
+
+/*
+<Key
           variant="black"
           keyForNote="s"
           soundSettings={{
@@ -251,9 +240,4 @@ const Synth = ({ children, ...soundSettings }) => {
           }}
           noMargin
         />
-      </KeyWrapper>
-    </RootWrapper>
-  );
-};
-
-export default Synth;
+*/
