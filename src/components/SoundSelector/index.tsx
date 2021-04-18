@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSynth } from "../../state/synth";
 import SelectorView from "./SelectorView";
 
-interface Props {
-  selected: any;
-  onChange: any;
-}
+const SoundSelector: React.FC = () => {
+  const sounds: OscillatorType[] = ["sine", "square", "sawtooth", "triangle"];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { synth } = useSynth();
 
-const SoundSelector: React.FC<Props> = ({ selected, onChange }) => {
-  const sounds = ["sine", "square", "sawtooth", "triangle"];
-  const selectedIndex = sounds.indexOf(selected);
+  const onChange = (index: number) => {
+    setSelectedIndex(index);
+
+    synth.set({
+      oscillator: {
+        type: sounds[index],
+      },
+    });
+  };
 
   const handleNextSound = () => {
     if (selectedIndex + 1 !== sounds.length) {
-      onChange(sounds[selectedIndex + 1]);
+      onChange(selectedIndex + 1);
     }
   };
 
   const handlePreviousSound = () => {
     if (selectedIndex > 0) {
-      onChange(sounds[selectedIndex - 1]);
+      onChange(selectedIndex - 1);
     }
   };
 

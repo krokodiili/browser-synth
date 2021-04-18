@@ -2,7 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import SoundSelectorButton from "./SoundSelectorButton";
 
-const SelectorView = ({ sounds, onNextSound, onPreviousSound, soundIndex }) => {
+interface Props {
+  sounds: string[];
+  onNextSound: () => void;
+  onPreviousSound: () => void;
+  soundIndex: number;
+}
+
+const SelectorView: React.FC<Props> = ({
+  sounds,
+  onNextSound,
+  onPreviousSound,
+  soundIndex,
+}) => {
   return (
     <RootWrapper>
       <SoundSelectorButton onClick={onPreviousSound} />
@@ -26,6 +38,7 @@ const RootWrapper = styled.div`
 `;
 
 const ScreenWrapper = styled.div`
+  width: 260px;
   background-color: #1f7307;
   padding: 1em;
   display: flex;
@@ -37,5 +50,5 @@ const ScreenWrapper = styled.div`
 
 const ArcadeText = styled.p`
   font-family: "arcade";
-  font-size: 20px;
+  font-size: 16px;
 `;

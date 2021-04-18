@@ -56,7 +56,7 @@ const Synth: React.FC = ({ children }) => {
         <Key variant="white" keyForNote="y" note={`A${octave + 1}`} />
         <Key variant="black" keyForNote="7" note={`A#${octave + 1}`} />
         <Key variant="white" keyForNote="u" note={`B${octave + 1}`} />
-        <Key variant="white" keyForNote="i" note={`C${octave + 2}`} />
+        <Key variant="white" keyForNote="i" note={`C${octave + 2}`} noMargin />
       </KeyWrapper>
     </RootWrapper>
   );

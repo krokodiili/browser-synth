@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SoundSelector from "./components/SoundSelector";
-import DurationSelector from "./components/DurationSelector";
 import Synth from "./components/Synth";
 import OctaveSelector from "./components/OctaveSelector";
 import Knob from "./components/Knob";
@@ -11,7 +10,9 @@ const App: React.FC = () => {
   return (
     <SynthProvider>
       <GlobalStyle />
-      <Synth></Synth>
+      <Synth>
+        <SoundSelector />
+      </Synth>
     </SynthProvider>
   );
 };
