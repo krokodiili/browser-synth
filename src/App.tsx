@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import SoundSelector from "./components/SoundSelector";
 import Synth from "./components/Synth";
 import OctaveSelector from "./components/OctaveSelector";
-import Knob from "./components/Knob";
 import GlobalStyle from "./globalStyles";
 import SynthProvider from "./state/synth";
+import Knobs from "./components/Knobs";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Synth>
         <SoundSelector />
+        <Knobs />
         <OctaveSelector />
       </Synth>
     </SynthProvider>
@@ -19,24 +20,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-/*
-  <SoundSelector
-
-          selected={soundType}
-          onChange={this.handleChange("soundType")}
-        />
-        <Knob
-          label="Volume"
-          value={this.state.volume}
-          onChange={(value) => {
-            this.setState({
-              ...this.state,
-              volume: value,
-            });
-          }}
-        />
-        <Knob />
-        <Knob />
-        <Knob />
-        <OctaveSelector />
-*/

@@ -2,21 +2,28 @@ import { createContext, useContext, useReducer } from "react";
 import * as Tone from "tone";
 import { PolySynth } from "tone";
 
+Tone.context.lookAhead = 0;
+
 type Dispatch = (action: Action) => void;
 
 export interface SynthState {
   octave: number;
   synth: PolySynth;
 
+  volume: number;
   dispatch: Dispatch;
 }
 
-export type Action = { type: "OCTAVE_UP" } | { type: "OCTAVE_DOWN" };
+export type Action =
+  | { type: "OCTAVE_UP" }
+  | { type: "OCTAVE_DOWN" }
+  | { type: "CHANGE_VOLUME"; payload: number };
 
 const initialState: SynthState = {
   octave: 4,
   synth: new Tone.PolySynth().toDestination(),
   dispatch: () => {},
+  volume: 0,
 };
 
 const synthReducer = (state: SynthState, action) => {
@@ -30,6 +37,11 @@ const synthReducer = (state: SynthState, action) => {
       return {
         ...state,
         octave: state.octave - 1,
+      };
+    case "CHANGE_VOLUME":
+      return {
+        ...state,
+        volume: action.payload,
       };
 
     default:

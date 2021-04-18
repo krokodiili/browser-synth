@@ -2,7 +2,13 @@ import React from "react";
 import { Knob, Arc, Pointer } from "rc-knob";
 import styled from "styled-components";
 
-const SoundKnob = ({ label, value, onChange }) => {
+interface Props {
+  label: string;
+  value: number;
+  onChange: (value: number) => void;
+}
+
+const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
   return (
     <RootWrapper>
       <Knob
