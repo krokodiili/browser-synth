@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Synth>
         <SoundSelector />
+        <OctaveSelector />
       </Synth>
     </SynthProvider>
   );

@@ -1,8 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSynth } from "../../state/synth";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
-import * as Tone from "tone";
+import useKeypress from "react-use-keypress";
 
 interface Props {
   variant: "white" | "black";
@@ -17,39 +17,33 @@ const KeyContainer: React.FC<Props> = ({
   noMargin,
   note,
 }) => {
-  const [pressed, setPressedState] = useState(false);
+  const [pressed, setPressed] = useState(false);
   const { synth } = useSynth();
 
-  //Event listeners cannot accerss the current state, fix that with refs
-  const pressedRef = React.useRef(pressed);
-  const setPressed = (value) => {
-    pressedRef.current = value;
-    setPressedState(value);
-  };
-
-  const handlePress = (event) => {
-    if (event.key === keyForNote && !pressedRef.current) {
+  useKeypress([keyForNote], (event) => {
+    if (!pressed) {
       setPressed(true);
       synth.triggerAttack(note);
     }
-  };
+  });
 
-  const handleRelease = (event) => {
-    if (event.key === keyForNote) {
-      setPressed(false);
-      synth.triggerRelease(note);
-    }
-  };
+  const handleRelease = useCallback(
+    (event) => {
+      if (event.key === keyForNote) {
+        setPressed(false);
+        synth.triggerRelease(note);
+      }
+    },
+    [keyForNote, note, synth]
+  );
 
   useEffect(() => {
-    document.body.addEventListener("keydown", handlePress);
     document.body.addEventListener("keyup", handleRelease);
 
     return () => {
-      document.removeEventListener("keydown", handlePress);
       document.removeEventListener("keyup", handleRelease);
     };
-  }, []);
+  }, [handleRelease]);
 
   return (
     <>
