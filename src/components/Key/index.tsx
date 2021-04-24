@@ -3,7 +3,7 @@ import { useSynth } from "../../state/synth";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
 import useKeypress from "react-use-keypress";
-
+import * as Tone from "tone";
 interface Props {
   variant: "white" | "black";
   keyForNote: string;
@@ -18,10 +18,23 @@ const KeyContainer: React.FC<Props> = ({
   note,
 }) => {
   const [pressed, setPressed] = useState(false);
-  const { synth } = useSynth();
+  const { synth, recording, dispatch } = useSynth();
 
   useKeypress([keyForNote], (event) => {
     if (!pressed) {
+      if (recording) {
+        const [bar, beat, sixteenth] = Tone.Transport.position
+          .toString()
+          .split(":");
+        dispatch({
+          type: "RECORD_NOTE",
+          payload: {
+            note,
+            time: `${bar}:${beat}:${parseInt(sixteenth) > 2 ? 2 : 0}`,
+          },
+        });
+      }
+
       setPressed(true);
       synth.triggerAttack(note);
     }
