@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Screen from "../Screen";
 import SoundSelectorButton from "./SoundSelectorButton";
 
 interface Props {
@@ -18,14 +19,12 @@ const SelectorView: React.FC<Props> = ({
   return (
     <RootWrapper>
       <SoundSelectorButton onClick={onPreviousSound} />
-      <ScreenWrapper>
-        <ArcadeText>
-          {`${soundIndex > 0 ? "<" : "|"}
+      <StyledScreen>
+        {`${soundIndex > 0 ? "<" : "|"}
             0${soundIndex + 1}: ${sounds[soundIndex].toUpperCase()}
             ${soundIndex < sounds.length - 1 ? ">" : "|"}
           `}
-        </ArcadeText>
-      </ScreenWrapper>
+      </StyledScreen>
       <SoundSelectorButton onClick={onNextSound} flipped />
     </RootWrapper>
   );
@@ -37,18 +36,8 @@ const RootWrapper = styled.div`
   display: flex;
 `;
 
-const ScreenWrapper = styled.div`
+const StyledScreen = styled(Screen)`
   width: 260px;
-  background-color: #1f7307;
   padding: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: black;
-`;
-
-const ArcadeText = styled.p`
-  font-family: "arcade";
-  font-size: 16px;
+  font-size: 1rem;
 `;
