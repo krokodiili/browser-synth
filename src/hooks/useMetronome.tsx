@@ -1,7 +1,5 @@
 import * as Tone from "tone";
 
-const mainSynth = new Tone.FMSynth().toDestination();
-const firstBeatSynth = new Tone.FMSynth().toDestination();
 const player = new Tone.Player(
   "https://tonejs.github.io/audio/drum-samples/CR78/hihat.mp3"
 ).toDestination();

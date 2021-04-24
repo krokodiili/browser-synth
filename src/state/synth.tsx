@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import * as Tone from "tone";
-import { PolySynth, TransportTime } from "tone";
+import { PolySynth } from "tone";
 import { Time } from "tone/build/esm/core/type/Units";
 import useMetronome from "../hooks/useMetronome";
 

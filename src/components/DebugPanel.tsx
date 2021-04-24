@@ -15,6 +15,7 @@ const DebugPanel = () => {
       console.log(part);
       part.stop();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recording]);
   return (
     <div style={{ display: "flex" }}>
