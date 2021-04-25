@@ -4,7 +4,7 @@ import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
 import useKeypress from "react-use-keypress";
 import * as Tone from "tone";
-import { useTimer } from "use-timer";
+
 interface Props {
   variant: "white" | "black";
   keyForNote: string;

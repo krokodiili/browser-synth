@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import RubberButton from "../RubberButton";
+import RubberButton from "../../RubberButton";
 
 interface Props {
   recording: boolean;
@@ -9,7 +9,7 @@ interface Props {
 
 const RecordButtonView: React.FC<Props> = ({ recording, onClick }) => {
   return (
-    <StyledRubberButton onClick={onClick}>
+    <StyledRubberButton onClick={onClick} round>
       {recording ? <PauseIcon /> : <RecordIcon />}
     </StyledRubberButton>
   );
@@ -18,7 +18,6 @@ const RecordButtonView: React.FC<Props> = ({ recording, onClick }) => {
 export default RecordButtonView;
 
 const StyledRubberButton = styled(RubberButton)`
-  border-radius: 100%;
   height: 50px;
   width: 50px;
 `;

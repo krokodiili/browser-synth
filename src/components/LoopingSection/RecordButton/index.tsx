@@ -1,6 +1,6 @@
 import React from "react";
 import RecordButtonView from "./view";
-import { useSynth } from "../../state/synth";
+import { useSynth } from "../../../state/synth";
 
 const RecordButton: React.FC = () => {
   const { recording, dispatch } = useSynth();

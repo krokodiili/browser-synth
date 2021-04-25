@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import * as Tone from "tone";
-import { PolySynth } from "tone";
+import { PolySynth, Reverb } from "tone";
 import { Time } from "tone/build/esm/core/type/Units";
 import useMetronome from "../hooks/useMetronome";
 
@@ -34,6 +34,9 @@ export type Action =
   | {
       type: "RECORD_NOTE";
       payload: RecordedNote;
+    }
+  | {
+      type: "CLEAR_LOOP";
     };
 
 const initialState: SynthState = {
@@ -83,6 +86,11 @@ const synthReducer = (state: SynthState, action: Action) => {
         ...state,
         notesRecorded: [...state.notesRecorded, action.payload],
       };
+    case "CLEAR_LOOP":
+      return {
+        ...state,
+        notesRecorded: [],
+      };
     default:
       return state;
   }
@@ -106,6 +114,11 @@ const SynthProvider: React.FC = ({ children }) => {
     ...state,
     dispatch,
   };
+
+  useEffect(() => {
+    const reverb = new Reverb(4).toDestination();
+    state.synth.connect(reverb);
+  }, []);
 
   return (
     <SynthContext.Provider value={value}>{children}</SynthContext.Provider>

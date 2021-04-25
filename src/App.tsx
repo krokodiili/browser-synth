@@ -6,8 +6,8 @@ import GlobalStyle from "./globalStyles";
 import SynthProvider from "./state/synth";
 import Knobs from "./components/Knobs";
 import BPMSelector from "./components/BPMSelector";
-import RecordButton from "./components/RecordButton";
 import DebugPanel from "./components/DebugPanel";
+import LoopingSection from "./components/LoopingSection";
 
 const App: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <Synth>
         <BPMSelector />
-        <RecordButton />
+        <LoopingSection />
         <SoundSelector />
         <Knobs />
         <OctaveSelector />
