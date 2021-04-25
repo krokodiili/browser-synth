@@ -3,7 +3,7 @@ import { RecordedNote, useSynth } from "../state/synth";
 import * as Tone from "tone";
 
 const DebugPanel = () => {
-  const { synth, recording, notesRecorded } = useSynth();
+  const { synth, playing, notesRecorded } = useSynth();
   useEffect(() => {
     const part = new Tone.Part((time: any, value: RecordedNote) => {
       synth.triggerAttackRelease(value.note, value.length, time);
@@ -12,7 +12,7 @@ const DebugPanel = () => {
       part.stop();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recording]);
+  }, [playing]);
   return (
     <div style={{ display: "flex", flexWrap: "wrap" }}>
       {notesRecorded.map((data) => (

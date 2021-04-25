@@ -10,6 +10,7 @@ type Dispatch = (action: Action) => void;
 
 export interface SynthState {
   octave: number;
+  playing: boolean;
   notesRecorded: RecordedNote[];
   recording: boolean;
   synth: PolySynth;
@@ -31,6 +32,8 @@ export type Action =
   | { type: "CHANGE_VOLUME"; payload: number }
   | { type: "START_RECORDING" }
   | { type: "STOP_RECORDING" }
+  | { type: "PLAY" }
+  | { type: "STOP_PLAYING" }
   | {
       type: "RECORD_NOTE";
       payload: RecordedNote;
@@ -47,6 +50,7 @@ const initialState: SynthState = {
   dispatch: () => {},
   volume: 0,
   recording: false,
+  playing: false,
 };
 
 const synthReducer = (state: SynthState, action: Action) => {
@@ -75,6 +79,7 @@ const synthReducer = (state: SynthState, action: Action) => {
       return {
         ...state,
         recording: true,
+        playing: true,
       };
     case "STOP_RECORDING":
       return {
@@ -91,6 +96,16 @@ const synthReducer = (state: SynthState, action: Action) => {
         ...state,
         notesRecorded: [],
       };
+    case "PLAY":
+      return {
+        ...state,
+        playing: true,
+      };
+    case "STOP_PLAYING":
+      return {
+        ...state,
+        playing: false,
+      };
     default:
       return state;
   }
@@ -102,13 +117,13 @@ const SynthProvider: React.FC = ({ children }) => {
   const { stopMetronome, startMetronome } = useMetronome();
 
   useEffect(() => {
-    if (state.recording) {
+    if (state.playing) {
       stopMetronome();
       startMetronome(state.bpm);
     } else {
       stopMetronome();
     }
-  }, [state.recording, state.bpm, stopMetronome, startMetronome]);
+  }, [state.playing, state.bpm, stopMetronome, startMetronome]);
 
   const value = {
     ...state,
