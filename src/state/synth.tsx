@@ -21,6 +21,7 @@ export interface SynthState {
 export interface RecordedNote {
   note: string;
   time: Time;
+  length: number;
 }
 
 export type Action =
