@@ -3,24 +3,6 @@ import styled from "styled-components";
 import { useSynth } from "../state/synth";
 import Key from "./Key";
 
-const ControlPanelWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const RootWrapper = styled.div`
-  padding: 20px;
-  color: #fff;
-  box-shadow: 0 8px 6px -6px black;
-  background: #363636;
-  border-radius: 8px;
-  max-width: 96vw;
-`;
-
-const KeyWrapper = styled.div`
-  display: flex;
-`;
-
 const Synth: React.FC = ({ children }) => {
   const { octave } = useSynth();
   return (
@@ -63,3 +45,21 @@ const Synth: React.FC = ({ children }) => {
 };
 
 export default Synth;
+
+const ControlPanelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const RootWrapper = styled.div`
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
+  background: #363636;
+  border-radius: 8px;
+  max-width: 96vw;
+`;
+
+const KeyWrapper = styled.div`
+  display: flex;
+`;
