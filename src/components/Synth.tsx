@@ -52,12 +52,12 @@ const ControlPanelWrapper = styled.div`
 `;
 
 const RootWrapper = styled.div`
-  padding: 20px;
+  padding: 1em;
   color: #fff;
   box-shadow: 0 8px 6px -6px black;
   background: #363636;
   border-radius: 8px;
-  max-width: 96vw;
+  max-width: 98vw;
 `;
 
 const KeyWrapper = styled.div`

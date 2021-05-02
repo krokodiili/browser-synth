@@ -15,7 +15,7 @@ const RootWrapper = styled.div<{ pressed?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  box-sizing: initial;
   z-index: 1;
   margin-left: -1.5em;
   background-image: linear-gradient(
