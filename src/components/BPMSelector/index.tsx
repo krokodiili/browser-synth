@@ -1,9 +1,9 @@
 import React from "react";
-import { useSynth } from "../../state/synth";
+import { useLoop } from "../../state/loop";
 import BPMSelectorView from "./view";
 
 const BPMSelector: React.FC = () => {
-  const { bpm, dispatch } = useSynth();
+  const { bpm, dispatch } = useLoop();
 
   const handleChange = (value: number) =>
     dispatch({

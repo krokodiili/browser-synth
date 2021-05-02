@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSynth } from "../../state/synth";
 import RubberButton from "../RubberButton";
+import * as Tone from "tone";
+import { RecordedNote, useLoop } from "../../state/loop";
 
 const PlayButton = () => {
-  const { playing, dispatch } = useSynth();
+  const { synth } = useSynth();
+  const { playing, notesRecorded, dispatch } = useLoop();
+
+  useEffect(() => {
+    const part = new Tone.Part((time: any, value: RecordedNote) => {
+      synth.triggerAttackRelease(value.note, value.length, time);
+    }, notesRecorded).start();
+    return () => {
+      part.stop();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing]);
 
   const handleClick = () => {
     dispatch({

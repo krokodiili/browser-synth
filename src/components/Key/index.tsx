@@ -4,6 +4,7 @@ import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
 import useKeypress from "react-use-keypress";
 import * as Tone from "tone";
+import { useLoop } from "../../state/loop";
 
 interface Props {
   variant: "white" | "black";
@@ -19,7 +20,9 @@ const KeyContainer: React.FC<Props> = ({
   note,
 }) => {
   const [pressed, setPressed] = useState(false);
-  const { synth, recording, dispatch } = useSynth();
+  const { synth } = useSynth();
+  const { recording, dispatch } = useLoop();
+
   const [startTime, setStartTime] = useState(Date.now());
   const [startBeat, setStartBeat] = useState("");
 

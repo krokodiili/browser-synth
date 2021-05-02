@@ -6,22 +6,22 @@ import GlobalStyle from "./globalStyles";
 import SynthProvider from "./state/synth";
 import Knobs from "./components/Knobs";
 import BPMSelector from "./components/BPMSelector";
-import DebugPanel from "./components/DebugPanel";
 import LoopingSection from "./components/LoopingSection";
+import LoopProvider from "./state/loop";
 
 const App: React.FC = () => {
   return (
     <SynthProvider>
-      <GlobalStyle />
-      <Synth>
-        <BPMSelector />
-        <LoopingSection />
-        <SoundSelector />
-        <Knobs />
-        <OctaveSelector />
-      </Synth>
-
-      <DebugPanel />
+      <LoopProvider>
+        <GlobalStyle />
+        <Synth>
+          <BPMSelector />
+          <LoopingSection />
+          <SoundSelector />
+          <Knobs />
+          <OctaveSelector />
+        </Synth>
+      </LoopProvider>
     </SynthProvider>
   );
 };

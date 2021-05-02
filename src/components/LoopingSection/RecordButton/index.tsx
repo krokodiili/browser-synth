@@ -1,9 +1,9 @@
 import React from "react";
 import RecordButtonView from "./view";
-import { useSynth } from "../../../state/synth";
+import { useLoop } from "../../../state/loop";
 
 const RecordButton: React.FC = () => {
-  const { recording, dispatch } = useSynth();
+  const { recording, dispatch } = useLoop();
 
   const handleClick = () => {
     dispatch({

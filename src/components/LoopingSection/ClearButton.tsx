@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useSynth } from "../../state/synth";
+import { useLoop } from "../../state/loop";
 import RubberButton from "../RubberButton";
 
 const ClearButton = () => {
-  const { dispatch } = useSynth();
+  const { dispatch } = useLoop();
 
   const handleClick = () =>
     dispatch({
