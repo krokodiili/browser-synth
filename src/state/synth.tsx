@@ -132,8 +132,13 @@ const SynthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     const reverb = new Reverb(4).toDestination();
+    state.synth.set({
+      oscillator: {
+        type: "sine",
+      },
+    });
     state.synth.connect(reverb);
-  }, []);
+  }, [state.synth]);
 
   return (
     <SynthContext.Provider value={value}>{children}</SynthContext.Provider>

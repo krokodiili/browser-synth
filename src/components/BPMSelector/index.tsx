@@ -5,7 +5,7 @@ import BPMSelectorView from "./view";
 const BPMSelector: React.FC = () => {
   const { bpm, dispatch } = useSynth();
 
-  const handleChange = (value) =>
+  const handleChange = (value: number) =>
     dispatch({
       type: "CHANGE_BPM",
       payload: value,

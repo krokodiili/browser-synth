@@ -23,7 +23,7 @@ const KeyContainer: React.FC<Props> = ({
   const [startTime, setStartTime] = useState(Date.now());
   const [startBeat, setStartBeat] = useState("");
 
-  useKeypress([keyForNote], (event) => {
+  useKeypress([keyForNote], () => {
     if (!pressed) {
       if (recording) {
         setStartTime(Date.now());

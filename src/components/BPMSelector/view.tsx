@@ -3,7 +3,12 @@ import styled from "styled-components";
 import RubberButton from "../RubberButton";
 import Screen from "../Screen";
 
-const BPMSelectorView = ({ value, onChange }) => {
+interface Props {
+  value: number;
+  onChange: (value: number) => void;
+}
+
+const BPMSelectorView: React.FC<Props> = ({ value, onChange }) => {
   return (
     <RootWrapper>
       <Screen>{value}</Screen>
