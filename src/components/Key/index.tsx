@@ -81,7 +81,7 @@ const KeyContainer: React.FC<Props> = ({
       {variant === "white" ? (
         <WhiteKey
           pressed={pressed}
-          noMargin={noMargin}
+          $noMargin={noMargin}
           keyForNote={keyForNote}
         />
       ) : (
