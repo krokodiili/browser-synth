@@ -57,13 +57,15 @@ const SynthProvider: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const reverb = new Reverb(4).toDestination();
+    const reverb = new Reverb().toDestination();
+    reverb.decay = 4;
     state.synth.set({
       oscillator: {
         type: "sine",
       },
     });
     state.synth.connect(reverb);
+    Tone.start();
   }, [state.synth]);
 
   return (

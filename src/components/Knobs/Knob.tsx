@@ -19,7 +19,7 @@ const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
         min={0}
         max={1}
         className="styledKnob"
-        onChange={onChange}
+        onChange={(value) => onChange(value)}
       >
         <Arc arcWidth={1.5} />
         <circle r="40" cx="50" cy="50" />

@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { KeyProps } from "./types";
 
 interface WhiteKeyProps extends KeyProps {
-  noMargin?: boolean;
+  $noMargin?: boolean;
 }
 
 const WhiteKey: React.FC<WhiteKeyProps> = ({
-  noMargin,
+  $noMargin,
   pressed,
   keyForNote,
 }) => (
-  <RootWrapper noMargin={noMargin} pressed={pressed}>
+  <RootWrapper $noMargin={$noMargin} $pressed={pressed}>
     {keyForNote}
   </RootWrapper>
 );
@@ -26,9 +26,9 @@ const RootWrapper = styled.div<Omit<WhiteKeyProps, "keyForNote">>`
   justify-content: center;
   color: rgba(0, 0, 0, 0.8);
   cursor: pointer;
-  box-shadow: ${({ pressed }) => (pressed ? "inset 0 0 2em #979797" : "")};
+  box-shadow: ${({ $pressed }) => ($pressed ? "inset 0 0 2em #979797" : "")};
   padding-bottom: 1em;
-  margin-left: ${({ noMargin }) => (noMargin ? "-1px" : "-1.4em")};
+  margin-left: ${({ $noMargin }) => ($noMargin ? "-1px" : "-1.4em")};
   background: #f1f1f1;
   border: 1px solid #979797;
   border-radius: 0 0 8px 8px;
