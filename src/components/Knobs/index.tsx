@@ -15,7 +15,7 @@ const Knobs = () => {
     <RootWrapper>
       <Knob
         label="Volume"
-        value={volume}
+        value={volume / 20 + 0.5}
         onChange={(value) => {
           dispatch({
             type: "CHANGE_VOLUME",
