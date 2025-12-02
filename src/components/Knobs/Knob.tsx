@@ -6,9 +6,10 @@ interface Props {
   label: string;
   value: number;
   onChange: (value: number) => void;
+  displayValue?: string;
 }
 
-const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
+const SoundKnob: React.FC<Props> = ({ label, value, onChange, displayValue }) => {
   const [isDragging, setIsDragging] = useState(false);
   const startYRef = useRef<number | null>(null);
   const startValueRef = useRef<number>(value);
@@ -18,7 +19,6 @@ const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
     startYRef.current = e.clientY;
     startValueRef.current = value;
 
-    // Optional: cursor styling during drag
     document.body.style.cursor = 'ns-resize';
   };
 
@@ -28,8 +28,8 @@ const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
     const handleMouseMove = (e: MouseEvent) => {
       if (startYRef.current === null) return;
 
-      const sensitivity = 0.005;
-      const deltaY = startYRef.current - e.clientY; // Up is negative Y, so (start - current) is positive when going up
+      const sensitivity = 0.008;
+      const deltaY = startYRef.current - e.clientY;
 
       let newValue = startValueRef.current + (deltaY * sensitivity);
       newValue = Math.max(0, Math.min(1, newValue));
@@ -53,6 +53,9 @@ const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
     };
   }, [isDragging, onChange]);
 
+  // Determine what to display in the center
+  const centerText = displayValue ?? Math.round(value * 100).toString();
+
   return (
     <KnobContainer>
       <KnobWrapper onMouseDown={handleMouseDown}>
@@ -69,6 +72,18 @@ const SoundKnob: React.FC<Props> = ({ label, value, onChange }) => {
             <Arc arcWidth={3} background="#333" color="#00ff00" radius={22} />
             <circle r="20" cx="25" cy="25" fill="#222" stroke="#111" strokeWidth="2" />
             <Pointer width={3} height={15} radius={5} type="rect" color="#ccc" />
+            <text
+              x="25"
+              y="25"
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="#fff"
+              fontSize="12"
+              fontWeight="bold"
+              style={{ pointerEvents: "none", userSelect: "none", textShadow: "0 0 2px #00ff00" }}
+            >
+              {centerText}
+            </text>
             </Knob>
         </StyledKnobContainer>
       </KnobWrapper>
@@ -91,7 +106,6 @@ const KnobWrapper = styled.div`
   width: 50px;
   height: 50px;
   cursor: ns-resize;
-  /* Ensure the wrapper captures events */
 `;
 
 const StyledKnobContainer = styled.div`

@@ -46,9 +46,10 @@ const MagnetKnob: React.FC = () => {
 
   return (
     <Knob
-      label={`Magnet: ${getLabel(quantization)}`}
+      label="Magnet"
       value={getKnobValue(quantization)}
       onChange={handleChange}
+      displayValue={getLabel(quantization)}
     />
   );
 };

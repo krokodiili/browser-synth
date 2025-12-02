@@ -65,7 +65,7 @@ describe('Knobs Component', () => {
     // Check for both knobs labels
     const labels = screen.getAllByTestId('knob-label');
     expect(labels[0].textContent).toBe('Volume');
-    expect(labels[1].textContent).toBe('Magnet: Off');
+    expect(labels[1].textContent).toBe('Magnet');
   });
 
   it('calculates the correct initial knob value from volume state (0dB -> 1)', () => {
