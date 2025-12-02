@@ -6,12 +6,18 @@ import * as Tone from "tone";
 import { RecordedNote, useLoop } from "../../state/loop";
 
 const PlayButton = () => {
-  const { synth } = useSynth();
+  const { tracks } = useSynth();
   const { playing, notesRecorded, dispatch } = useLoop();
 
   useEffect(() => {
     const part = new Tone.Part((time: any, value: RecordedNote) => {
-      synth.triggerAttackRelease(value.note, value.length, time);
+      // Find the correct synth based on trackId. Fallback to track 0 if trackId is undefined (legacy notes).
+      const trackId = value.trackId !== undefined ? value.trackId : 0;
+      const track = tracks.find(t => t.id === trackId);
+
+      if (track) {
+        track.synth.triggerAttackRelease(value.note, value.length, time);
+      }
     }, notesRecorded).start();
     return () => {
       part.stop();
