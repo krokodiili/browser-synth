@@ -62,6 +62,13 @@ vi.mock('tone', async () => {
         dispose: vi.fn(),
       };
     }),
+    MembraneSynth: vi.fn(function () {
+      return {
+        toDestination: vi.fn().mockReturnThis(),
+        triggerAttackRelease: vi.fn(),
+        volume: { value: 0 },
+      };
+    }),
     start: vi.fn(),
   };
 });

@@ -40,7 +40,8 @@ type Action =
     | { type: "TOGGLE_STEP"; trackIndex: number; stepIndex: number }
     | { type: "SET_CURRENT_STEP"; step: number }
     | { type: "CHANGE_SAMPLE"; trackIndex: number; sampleKey: string }
-    | { type: "SET_SWING"; payload: number };
+    | { type: "SET_SWING"; payload: number }
+    | { type: "CLEAR_PATTERN" };
 
 const STEPS = 16;
 
@@ -90,6 +91,14 @@ const drumReducer = (state: DrumMachineState, action: Action): DrumMachineState 
             return {
                 ...state,
                 swing: action.payload,
+            };
+        case "CLEAR_PATTERN":
+            return {
+                ...state,
+                tracks: state.tracks.map((track) => ({
+                    ...track,
+                    steps: Array(STEPS).fill(false),
+                })),
             };
         default:
             return state;
