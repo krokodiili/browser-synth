@@ -2,17 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 interface Props {
-  onClick: () => void;
-  $round?: boolean;
+  onClick?: () => void;
+  round?: boolean;
+  className?: string;
+  children?: React.ReactNode;
 }
 
-const RubberButton: React.FC<Props> = ({ onClick, ...props }) => (
-  <StyledButton onClick={onClick} {...props}></StyledButton>
+const RubberButton: React.FC<Props> = ({ onClick, round, className, children }) => (
+  <StyledButton onClick={onClick} className={className} $round={round}>
+    {children}
+  </StyledButton>
 );
 
 export default RubberButton;
 
-const StyledButton = styled.button<Props>`
+const StyledButton = styled.button<{ $round?: boolean }>`
   background: #363636;
   border: 1px solid #222222;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);

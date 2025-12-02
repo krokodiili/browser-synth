@@ -32,11 +32,13 @@ const Knobs = () => {
 export default Knobs;
 
 const RootWrapper = styled.div`
-  background-color: gray;
-  border-radius: 4px;
-  width: 400px;
   display: flex;
-  justify-content: space-around;
-  height: 50px;
-  padding: 0 10px;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  /* Removed fixed width and height to allow flexibility */
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
 `;

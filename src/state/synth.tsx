@@ -87,6 +87,8 @@ const SynthProvider: React.FC = ({ children }) => {
     reverb.decay = 4;
 
     // Connect all synths to reverb
+    // We use the synths from the state available on mount (initialState)
+    // Since synth instances are stable, this connection persists.
     state.tracks.forEach((track) => {
       track.synth.set({
         oscillator: {
@@ -97,7 +99,11 @@ const SynthProvider: React.FC = ({ children }) => {
     });
 
     Tone.start();
-  }, [state.tracks]); // This might need optimization if tracks change often, but synth objects should be stable.
+
+    return () => {
+      reverb.dispose();
+    };
+  }, []);
 
   return (
     <SynthContext.Provider value={value}>{children}</SynthContext.Provider>

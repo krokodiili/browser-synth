@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSynth } from "../../state/synth";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
@@ -23,6 +23,10 @@ const KeyContainer: React.FC<Props> = ({
   const { synth, selectedTrackId } = useSynth();
   const { recording, dispatch } = useLoop();
 
+  // Refs to capture context at the moment of attack
+  const activeSynthRef = useRef<Tone.PolySynth | null>(null);
+  const activeTrackIdRef = useRef<number>(selectedTrackId);
+
   const [startTime, setStartTime] = useState(Date.now());
   const [startBeat, setStartBeat] = useState("");
 
@@ -40,6 +44,11 @@ const KeyContainer: React.FC<Props> = ({
       }
 
       setPressed(true);
+
+      // Capture the current synth and track ID to ensure correct release/recording
+      activeSynthRef.current = synth;
+      activeTrackIdRef.current = selectedTrackId;
+
       synth.triggerAttack(note);
     }
   });
@@ -56,14 +65,19 @@ const KeyContainer: React.FC<Props> = ({
               note,
               time: startBeat,
               length: parseFloat(holdTime),
-              trackId: selectedTrackId,
+              trackId: activeTrackIdRef.current, // Use the track ID where the note started
             },
           });
         }
 
         setStartTime(0);
         setPressed(false);
-        synth.triggerRelease(note);
+
+        // Release the synth that was triggered, or fallback to current
+        const targetSynth = activeSynthRef.current || synth;
+        targetSynth.triggerRelease(note);
+
+        activeSynthRef.current = null;
       }
     },
     [keyForNote, recording, synth, note, startTime, dispatch, startBeat, selectedTrackId]

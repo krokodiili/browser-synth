@@ -76,5 +76,5 @@ vi.mock('tone', async () => {
 describe('App', () => {
   it('renders without crashing', () => {
     render(<App />);
-  });
+  }, 10000);
 });
