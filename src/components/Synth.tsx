@@ -2,13 +2,25 @@ import React from "react";
 import styled from "styled-components";
 import { useSynth } from "../state/synth";
 import Key from "./Key";
+import RubberButton from "./RubberButton";
 
 const Synth: React.FC = ({ children }) => {
-  const { octave } = useSynth();
+  const { octave, tracks, selectedTrackId, dispatch } = useSynth();
   return (
     <RootWrapper>
       <ControlPanelWrapper>
         <h1> qwertySynth </h1>
+        <TrackSelector>
+          {tracks.map((track) => (
+            <TrackButton
+              key={track.id}
+              onClick={() => dispatch({ type: "SELECT_TRACK", payload: track.id })}
+              $active={selectedTrackId === track.id}
+            >
+              Track {track.id + 1}
+            </TrackButton>
+          ))}
+        </TrackSelector>
         {children}
       </ControlPanelWrapper>
       <hr />
@@ -62,4 +74,23 @@ const RootWrapper = styled.div`
 
 const KeyWrapper = styled.div`
   display: flex;
+`;
+
+const TrackSelector = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
+
+const TrackButton = styled(RubberButton)<{ $active: boolean }>`
+  width: 80px;
+  height: 40px;
+  font-size: 0.8rem;
+  background-color: ${(props) => (props.$active ? "#00ff00" : "#555")};
+  color: ${(props) => (props.$active ? "#000" : "#fff")};
+  box-shadow: ${(props) => (props.$active ? "inset 0 0 10px #000" : "none")};
+
+  &:active {
+    background-color: #00cc00;
+  }
 `;

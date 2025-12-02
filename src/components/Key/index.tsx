@@ -20,7 +20,7 @@ const KeyContainer: React.FC<Props> = ({
   note,
 }) => {
   const [pressed, setPressed] = useState(false);
-  const { synth } = useSynth();
+  const { synth, selectedTrackId } = useSynth();
   const { recording, dispatch } = useLoop();
 
   const [startTime, setStartTime] = useState(Date.now());
@@ -56,6 +56,7 @@ const KeyContainer: React.FC<Props> = ({
               note,
               time: startBeat,
               length: parseFloat(holdTime),
+              trackId: selectedTrackId,
             },
           });
         }
@@ -65,7 +66,7 @@ const KeyContainer: React.FC<Props> = ({
         synth.triggerRelease(note);
       }
     },
-    [keyForNote, recording, synth, note, startTime, dispatch, startBeat]
+    [keyForNote, recording, synth, note, startTime, dispatch, startBeat, selectedTrackId]
   );
 
   useEffect(() => {

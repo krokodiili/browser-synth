@@ -6,41 +6,66 @@ Tone.context.lookAhead = 0;
 
 type Dispatch = (action: Action) => void;
 
-export interface SynthState {
+export interface Track {
+  id: number;
   octave: number;
   synth: PolySynth;
   volume: number;
+}
+
+export interface SynthState {
+  tracks: Track[];
+  selectedTrackId: number;
   dispatch: Dispatch;
 }
 
 export type Action =
   | { type: "OCTAVE_UP" }
   | { type: "OCTAVE_DOWN" }
-  | { type: "CHANGE_VOLUME"; payload: number };
+  | { type: "CHANGE_VOLUME"; payload: number }
+  | { type: "SELECT_TRACK"; payload: number };
 
-const initialState: SynthState = {
+const createTrack = (id: number): Track => ({
+  id,
   octave: 4,
   synth: new Tone.PolySynth().toDestination(),
-  dispatch: () => {},
   volume: 0,
+});
+
+const initialState: SynthState = {
+  tracks: [createTrack(0), createTrack(1), createTrack(2), createTrack(3)],
+  selectedTrackId: 0,
+  dispatch: () => {},
 };
 
 const synthReducer = (state: SynthState, action: Action) => {
+  const currentTrack = state.tracks[state.selectedTrackId];
+  const updateTrack = (updates: Partial<Track>) => {
+    return state.tracks.map((track) =>
+      track.id === state.selectedTrackId ? { ...track, ...updates } : track
+    );
+  };
+
   switch (action.type) {
     case "OCTAVE_UP":
       return {
         ...state,
-        octave: state.octave + 1,
+        tracks: updateTrack({ octave: currentTrack.octave + 1 }),
       };
     case "OCTAVE_DOWN":
       return {
         ...state,
-        octave: state.octave - 1,
+        tracks: updateTrack({ octave: currentTrack.octave - 1 }),
       };
     case "CHANGE_VOLUME":
       return {
         ...state,
-        volume: action.payload,
+        tracks: updateTrack({ volume: action.payload }),
+      };
+    case "SELECT_TRACK":
+      return {
+        ...state,
+        selectedTrackId: action.payload,
       };
     default:
       return state;
@@ -51,6 +76,7 @@ const SynthContext = createContext<SynthState>(initialState);
 const SynthProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(synthReducer, initialState);
 
+  // Expose the current track's properties + dispatch + tracks list
   const value = {
     ...state,
     dispatch,
@@ -59,14 +85,19 @@ const SynthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     const reverb = new Reverb().toDestination();
     reverb.decay = 4;
-    state.synth.set({
-      oscillator: {
-        type: "sine",
-      },
+
+    // Connect all synths to reverb
+    state.tracks.forEach((track) => {
+      track.synth.set({
+        oscillator: {
+          type: "sine",
+        },
+      });
+      track.synth.connect(reverb);
     });
-    state.synth.connect(reverb);
+
     Tone.start();
-  }, [state.synth]);
+  }, [state.tracks]); // This might need optimization if tracks change often, but synth objects should be stable.
 
   return (
     <SynthContext.Provider value={value}>{children}</SynthContext.Provider>
@@ -81,5 +112,13 @@ export const useSynth = () => {
     throw new Error("SynthProvider not found");
   }
 
-  return context;
+  const selectedTrack = context.tracks[context.selectedTrackId];
+
+  return {
+    ...context,
+    // For backward compatibility and ease of use in components that act on the active track
+    octave: selectedTrack.octave,
+    synth: selectedTrack.synth,
+    volume: selectedTrack.volume,
+  };
 };
