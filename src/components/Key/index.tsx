@@ -80,7 +80,7 @@ const KeyContainer: React.FC<Props> = ({
         activeSynthRef.current = null;
       }
     },
-    [keyForNote, recording, synth, note, startTime, dispatch, startBeat]
+    [keyForNote, recording, synth, note, startTime, dispatch, startBeat, selectedTrackId]
   );
 
   useEffect(() => {
