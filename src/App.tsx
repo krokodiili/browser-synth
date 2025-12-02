@@ -8,19 +8,24 @@ import Knobs from "./components/Knobs";
 import BPMSelector from "./components/BPMSelector";
 import LoopingSection from "./components/LoopingSection";
 import LoopProvider from "./state/loop";
+import { DrumMachineProvider } from "./state/drumMachine";
+import DrumMachine from "./components/DrumMachine/DrumMachine";
 
 const App: React.FC = () => {
   return (
     <SynthProvider>
       <LoopProvider>
-        <GlobalStyle />
-        <Synth>
-          <BPMSelector />
-          <LoopingSection />
-          <SoundSelector />
-          <Knobs />
-          <OctaveSelector />
-        </Synth>
+        <DrumMachineProvider>
+          <GlobalStyle />
+          <DrumMachine />
+          <Synth>
+            <BPMSelector />
+            <LoopingSection />
+            <SoundSelector />
+            <Knobs />
+            <OctaveSelector />
+          </Synth>
+        </DrumMachineProvider>
       </LoopProvider>
     </SynthProvider>
   );
