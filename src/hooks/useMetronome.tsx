@@ -1,18 +1,26 @@
 import * as Tone from "tone";
 
-const player = new Tone.Player(
-  "https://tonejs.github.io/audio/drum-samples/CR78/hihat.mp3"
-).toDestination();
-const player2 = new Tone.Player(
-  "https://tonejs.github.io/audio/drum-samples/CR78/kick.mp3"
-).toDestination();
+const clickSynth = new Tone.MembraneSynth({
+  pitchDecay: 0.008,
+  octaves: 2,
+  envelope: {
+    attack: 0.001,
+    decay: 0.2,
+    sustain: 0,
+    release: 0.1, // Quick release
+  }
+}).toDestination();
+// Lower volume slightly so it's not piercing
+clickSynth.volume.value = -10;
 
 const mainLoop = new Tone.Loop((time) => {
-  player.start(0);
+  // Weak beat
+  clickSynth.triggerAttackRelease("C5", "32n", time);
 }, "4n");
 
 const firstBeatLoop = new Tone.Loop((time) => {
-  player2.start(0);
+  // Strong beat (Accent)
+  clickSynth.triggerAttackRelease("G5", "32n", time);
 }, "1n");
 
 const startMetronome = (bpm: number) => {
