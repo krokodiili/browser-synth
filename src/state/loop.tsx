@@ -19,6 +19,7 @@ export interface RecordedNote {
   note: string;
   time: Time;
   length: number;
+  trackId: number;
 }
 
 export type Action =
@@ -34,7 +35,8 @@ export type Action =
     }
   | {
       type: "CLEAR_LOOP";
-    };
+    }
+  | { type: "TOGGLE_METRONOME" };
 
 const initialState: LoopState = {
   bpm: 128,
@@ -43,6 +45,7 @@ const initialState: LoopState = {
   recording: false,
   playing: false,
   quantization: "0",
+  isMetronomeOn: false,
 };
 
 const loopReducer = (state: LoopState, action: Action) => {
