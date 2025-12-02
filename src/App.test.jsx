@@ -27,6 +27,9 @@ vi.mock('tone', async () => {
       return {
         toDestination: vi.fn().mockReturnThis(),
         start: vi.fn(),
+        load: vi.fn().mockResolvedValue(undefined),
+        loaded: true,
+        dispose: vi.fn(),
       };
     }),
     Loop: vi.fn(function (callback, interval) {
@@ -48,7 +51,24 @@ vi.mock('tone', async () => {
       start: vi.fn(),
       stop: vi.fn(),
       cancel: vi.fn(),
+      context: {
+        lookAhead: 0,
+      }
     },
+    Sequence: vi.fn(function (callback, events, subdivision) {
+      return {
+        start: vi.fn(),
+        stop: vi.fn(),
+        dispose: vi.fn(),
+      };
+    }),
+    MembraneSynth: vi.fn(function () {
+      return {
+        toDestination: vi.fn().mockReturnThis(),
+        triggerAttackRelease: vi.fn(),
+        volume: { value: 0 },
+      };
+    }),
     start: vi.fn(),
   };
 });

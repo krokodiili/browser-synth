@@ -10,6 +10,7 @@ export interface LoopState {
   bpm: number;
   dispatch: Dispatch;
   notesRecorded: RecordedNote[];
+  isMetronomeOn: boolean;
 }
 
 export interface RecordedNote {
@@ -78,6 +79,11 @@ const loopReducer = (state: LoopState, action: Action) => {
         ...state,
         playing: false,
       };
+    case "TOGGLE_METRONOME":
+      return {
+        ...state,
+        isMetronomeOn: !state.isMetronomeOn,
+      };
     default:
       return state;
   }
@@ -89,13 +95,13 @@ const LoopProvider: React.FC = ({ children }) => {
   const { stopMetronome, startMetronome } = useMetronome();
 
   useEffect(() => {
-    if (state.playing) {
+    if (state.playing && state.isMetronomeOn) {
       stopMetronome();
       startMetronome(state.bpm);
     } else {
       stopMetronome();
     }
-  }, [state.playing, state.bpm, stopMetronome, startMetronome]);
+  }, [state.playing, state.bpm, state.isMetronomeOn, stopMetronome, startMetronome]);
 
   const value = {
     ...state,
