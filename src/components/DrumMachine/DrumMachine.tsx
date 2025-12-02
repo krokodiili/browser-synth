@@ -24,6 +24,9 @@ const DrumMachine: React.FC = () => {
                                 title={`Swing: ${Math.round(swing * 100)}%`}
                             />
                         </ControlGroup>
+                        <ClearButton onClick={() => dispatch({ type: "CLEAR_PATTERN" })}>
+                            Clear
+                        </ClearButton>
                         <StatusLed />
                     </Controls>
                 </Header>
@@ -154,6 +157,29 @@ const Label = styled.span`
     color: #aaa;
     text-transform: uppercase;
     font-weight: bold;
+`;
+
+const ClearButton = styled.button`
+    background: #a33;
+    color: #fff;
+    border: 1px solid #600;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #500;
+    font-family: inherit;
+
+    &:hover {
+        background: #c44;
+    }
+
+    &:active {
+        transform: translateY(2px);
+        box-shadow: none;
+    }
 `;
 
 const StatusLed = styled.div`
