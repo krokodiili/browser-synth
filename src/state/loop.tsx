@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Time } from "tone/build/esm/core/type/Units";
+import * as Tone from "tone";
 import useMetronome from "../hooks/useMetronome";
 
 type Dispatch = (action: Action) => void;
@@ -10,6 +11,7 @@ export interface LoopState {
   bpm: number;
   dispatch: Dispatch;
   notesRecorded: RecordedNote[];
+  quantization: string;
 }
 
 export interface RecordedNote {
@@ -24,6 +26,7 @@ export type Action =
   | { type: "STOP_RECORDING" }
   | { type: "PLAY" }
   | { type: "STOP_PLAYING" }
+  | { type: "SET_QUANTIZATION"; payload: string }
   | {
       type: "RECORD_NOTE";
       payload: RecordedNote;
@@ -38,6 +41,7 @@ const initialState: LoopState = {
   dispatch: () => {},
   recording: false,
   playing: false,
+  quantization: "0",
 };
 
 const loopReducer = (state: LoopState, action: Action) => {
@@ -58,10 +62,19 @@ const loopReducer = (state: LoopState, action: Action) => {
         ...state,
         recording: false,
       };
-    case "RECORD_NOTE":
+    case "SET_QUANTIZATION":
       return {
         ...state,
-        notesRecorded: [...state.notesRecorded, action.payload],
+        quantization: action.payload,
+      };
+    case "RECORD_NOTE":
+      let { time } = action.payload;
+      if (state.quantization !== "0") {
+        time = Tone.Time(Tone.Time(time).quantize(state.quantization as Tone.Subdivision)).toNotation();
+      }
+      return {
+        ...state,
+        notesRecorded: [...state.notesRecorded, { ...action.payload, time }],
       };
     case "CLEAR_LOOP":
       return {

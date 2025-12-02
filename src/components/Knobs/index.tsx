@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSynth } from "../../state/synth";
 import Knob from "./Knob";
+import MagnetKnob from "./MagnetKnob";
 
 const Knobs = () => {
   const { synth, volume, dispatch } = useSynth();
@@ -23,6 +24,7 @@ const Knobs = () => {
           });
         }}
       />
+      <MagnetKnob />
     </RootWrapper>
   );
 };
@@ -32,8 +34,9 @@ export default Knobs;
 const RootWrapper = styled.div`
   background-color: gray;
   border-radius: 4px;
-  width: 200px;
+  width: 400px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   height: 50px;
+  padding: 0 10px;
 `;
