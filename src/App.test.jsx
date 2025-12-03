@@ -13,6 +13,7 @@ vi.mock('tone', async () => {
         triggerAttack: vi.fn(),
         triggerRelease: vi.fn(),
         connect: vi.fn(),
+        disconnect: vi.fn(),
         set: vi.fn(),
         volume: { value: 0 },
       };
@@ -20,7 +21,35 @@ vi.mock('tone', async () => {
     Reverb: vi.fn(function () {
       return {
         toDestination: vi.fn().mockReturnThis(),
+        connect: vi.fn(),
+        disconnect: vi.fn(),
+        dispose: vi.fn(),
         decay: 0,
+        preDelay: 0,
+        wet: { value: 0 },
+      };
+    }),
+    FeedbackDelay: vi.fn(function () {
+      return {
+        toDestination: vi.fn().mockReturnThis(),
+        connect: vi.fn(),
+        disconnect: vi.fn(),
+        dispose: vi.fn(),
+        delayTime: { value: 0 },
+        feedback: { value: 0 },
+        wet: { value: 0 },
+      };
+    }),
+    Chorus: vi.fn(function () {
+      return {
+        toDestination: vi.fn().mockReturnThis(),
+        connect: vi.fn(),
+        disconnect: vi.fn(),
+        dispose: vi.fn(),
+        start: vi.fn(),
+        frequency: { value: 0 },
+        depth: 0,
+        wet: { value: 0 },
       };
     }),
     Player: vi.fn(function () {

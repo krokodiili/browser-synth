@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSynth } from "../state/synth";
 import Key from "./Key";
 import RubberButton from "./RubberButton";
+import EffectsPanel from "./EffectsPanel";
 
 const Synth: React.FC = ({ children }) => {
   const { octave, tracks, selectedTrackId, dispatch } = useSynth();
@@ -27,6 +28,7 @@ const Synth: React.FC = ({ children }) => {
 
         <ControlsSection>
            {children}
+           <EffectsPanel />
         </ControlsSection>
 
         <KeybedSection>
@@ -179,23 +181,4 @@ const TrackLed = styled.div<{ $active: boolean }>`
   background-color: ${(props) => (props.$active ? "#00ff00" : "#223322")};
   box-shadow: ${(props) => (props.$active ? "0 0 4px #00ff00" : "inset 0 1px 2px rgba(0,0,0,0.5)")};
   margin-right: 5px;
-`;
-
-const TrackSelector = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-`;
-
-const TrackButton = styled(RubberButton)<{ $active: boolean }>`
-  width: 80px;
-  height: 40px;
-  font-size: 0.8rem;
-  background-color: ${(props) => (props.$active ? "#00ff00" : "#555")};
-  color: ${(props) => (props.$active ? "#000" : "#fff")};
-  box-shadow: ${(props) => (props.$active ? "inset 0 0 10px #000" : "none")};
-
-  &:active {
-    background-color: #00cc00;
-  }
 `;
