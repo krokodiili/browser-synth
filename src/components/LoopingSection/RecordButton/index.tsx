@@ -1,6 +1,6 @@
 import React from "react";
 import RecordButtonView from "./view";
-import { useLoop } from "../../../state/loop";
+import { useLoop } from "../loopState";
 
 const RecordButton: React.FC = () => {
   const { recording, dispatch } = useLoop();

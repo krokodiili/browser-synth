@@ -1,16 +1,17 @@
 import React from "react";
-import SoundSelector from "./components/SoundSelector";
+import SoundSelector from "./components/Synth/SoundSelector";
 import Synth from "./components/Synth";
-import OctaveSelector from "./components/OctaveSelector";
+import OctaveSelector from "./components/Synth/OctaveSelector";
 import GlobalStyle from "./globalStyles";
-import SynthProvider from "./state/synth";
-import Knobs from "./components/Knobs";
+import SynthProvider from "./components/Synth/synthState";
+import Knobs from "./components/Synth/Knobs";
 import BPMSelector from "./components/BPMSelector";
 import LoopingSection from "./components/LoopingSection";
-import LoopProvider from "./state/loop";
-import { DrumMachineProvider } from "./state/drumMachine";
+import LoopProvider from "./components/LoopingSection/loopState";
+import { DrumMachineProvider } from "./components/DrumMachine/drumMachineState";
 import DrumMachine from "./components/DrumMachine/DrumMachine";
 import MasterBoard from "./components/MasterBoard/MasterBoard";
+import SongManager from "./components/SongManager/SongManager";
 import styled from "styled-components";
 
 const App: React.FC = () => {
@@ -20,8 +21,9 @@ const App: React.FC = () => {
         <DrumMachineProvider>
           <GlobalStyle />
           <TopSection>
-            <MasterBoard />
+            <SongManager />
             <DrumMachine />
+            <MasterBoard />
           </TopSection>
           <Synth>
             <BPMSelector />
