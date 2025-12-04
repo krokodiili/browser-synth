@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSynth } from "../state/synth";
+import { useSynth } from "./synthState";
 import Knob from "./Knobs/Knob";
-import Screen from "./Screen";
-import RubberButton from "./RubberButton";
+import Screen from "../Screen";
+import RubberButton from "../RubberButton";
 
 type EffectType = "chorus" | "delay" | "reverb";
 

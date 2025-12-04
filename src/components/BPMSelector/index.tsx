@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoop } from "../../state/loop";
+import { useLoop } from "../LoopingSection/loopState";
 import BPMSelectorView from "./view";
 
 const BPMSelector: React.FC = () => {

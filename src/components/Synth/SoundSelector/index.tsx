@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSynth } from "../../state/synth";
+import { useSynth } from "../synthState";
 import SelectorView from "./SelectorView";
 
 const SoundSelector: React.FC = () => {

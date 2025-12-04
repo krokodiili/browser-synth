@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useSynth } from "../../state/synth";
-import RubberButton from "../RubberButton";
 import * as Tone from "tone";
-import { RecordedNote, useLoop } from "../../state/loop";
+import RubberButton from "../RubberButton";
+import { useSynth } from "../Synth/synthState";
+import { RecordedNote, useLoop } from "./loopState";
 
 const PlayButton = () => {
   const { tracks } = useSynth();

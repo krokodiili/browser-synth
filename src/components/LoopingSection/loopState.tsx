@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Time } from "tone/build/esm/core/type/Units";
 import * as Tone from "tone";
-import useMetronome from "../hooks/useMetronome";
+import useMetronome from "../../hooks/useMetronome";
 
 type Dispatch = (action: Action) => void;
 
@@ -36,7 +36,8 @@ export type Action =
   | {
       type: "CLEAR_LOOP";
     }
-  | { type: "TOGGLE_METRONOME" };
+  | { type: "TOGGLE_METRONOME" }
+  | { type: "LOAD_SONG"; payload: { bpm: number; notes: RecordedNote[] } };
 
 const initialState: LoopState = {
   bpm: 128,
@@ -99,6 +100,15 @@ const loopReducer = (state: LoopState, action: Action) => {
       return {
         ...state,
         isMetronomeOn: !state.isMetronomeOn,
+      };
+    case "LOAD_SONG":
+      return {
+        ...state,
+        bpm: action.payload.bpm,
+        notesRecorded: action.payload.notes,
+        // Reset playing state or let caller handle it
+        playing: false,
+        recording: false,
       };
     default:
       return state;
