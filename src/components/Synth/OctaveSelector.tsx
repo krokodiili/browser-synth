@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSynth } from "../state/synth";
-import RubberButton from "./RubberButton";
+import { useSynth } from "./synthState";
+import RubberButton from "../RubberButton";
 
 const OctaveSelector = () => {
   const { octave, dispatch } = useSynth();

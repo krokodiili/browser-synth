@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDrumMachine } from "../../state/drumMachine";
+import { useDrumMachine } from "./drumMachineState";
 
 const DrumMachine: React.FC = () => {
     const { tracks, currentStep, swing, dispatch, availableSamples } = useDrumMachine();

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSynth } from "../../state/synth";
+import * as Tone from "tone";
 import BlackKey from "./BlackKey";
 import WhiteKey from "./WhiteKey";
 import useKeypress from "react-use-keypress";
-import * as Tone from "tone";
-import { useLoop } from "../../state/loop";
+import { useSynth } from "../synthState";
+import { useLoop } from "../../LoopingSection/loopState";
 
 interface Props {
   variant: "white" | "black";

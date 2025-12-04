@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { Time } from "tone/build/esm/core/type/Units";
 import * as Tone from "tone";
-import useMetronome from "../hooks/useMetronome";
+import useMetronome from "../../hooks/useMetronome";
 
 type Dispatch = (action: Action) => void;
 

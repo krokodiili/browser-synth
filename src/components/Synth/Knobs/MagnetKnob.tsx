@@ -1,6 +1,6 @@
 import React from "react";
 import Knob from "./Knob";
-import { useLoop } from "../../state/loop";
+import { useLoop } from "../../LoopingSection/loopState";
 
 const MagnetKnob: React.FC = () => {
   const { quantization, dispatch } = useLoop();

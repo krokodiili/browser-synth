@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import * as Tone from "tone";
-import { useLoop } from "./loop";
+import { useLoop } from "../LoopingSection/loopState";
 
 // Import samples using Vite's glob import
 const kickFiles = import.meta.glob('/src/assets/drums/kick/*', { query: '?url', import: 'default', eager: true });
