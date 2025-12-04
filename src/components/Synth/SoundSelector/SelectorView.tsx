@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Screen from "../Screen";
+import Screen from "../../Screen";
 import SoundSelectorButton from "./SoundSelectorButton";
 
 interface Props {

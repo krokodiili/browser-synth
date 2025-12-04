@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useLoop } from "../../state/loop";
+import { useLoop } from "../LoopingSection/loopState";
 
 const MasterBoard: React.FC = () => {
     const { isMetronomeOn, dispatch } = useLoop();

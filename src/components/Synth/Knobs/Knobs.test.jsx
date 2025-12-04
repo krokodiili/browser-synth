@@ -2,16 +2,16 @@ import React from 'react';
 import { render, fireEvent, screen, cleanup } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import Knobs from './index';
-import { useSynth } from '../../state/synth';
-import { useLoop } from '../../state/loop';
+import { useSynth } from '../synthState';
+import { useLoop } from '../../LoopingSection/loopState';
 
 // Mock the useSynth hook
-vi.mock('../../state/synth', () => ({
+vi.mock('../synthState', () => ({
   useSynth: vi.fn(),
 }));
 
 // Mock the useLoop hook
-vi.mock('../../state/loop', () => ({
+vi.mock('../../LoopingSection/loopState', () => ({
   useLoop: vi.fn(),
 }));
 
