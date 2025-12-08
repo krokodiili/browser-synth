@@ -41,7 +41,8 @@ type Action =
     | { type: "SET_CURRENT_STEP"; step: number }
     | { type: "CHANGE_SAMPLE"; trackIndex: number; sampleKey: string }
     | { type: "SET_SWING"; payload: number }
-    | { type: "CLEAR_PATTERN" };
+    | { type: "CLEAR_PATTERN" }
+    | { type: "LOAD_PATTERN"; payload: { tracks: TrackState[]; swing: number } };
 
 const STEPS = 16;
 
@@ -99,6 +100,12 @@ const drumReducer = (state: DrumMachineState, action: Action): DrumMachineState 
                     ...track,
                     steps: Array(STEPS).fill(false),
                 })),
+            };
+        case "LOAD_PATTERN":
+            return {
+                ...state,
+                tracks: action.payload.tracks,
+                swing: action.payload.swing,
             };
         default:
             return state;

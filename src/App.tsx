@@ -11,6 +11,7 @@ import LoopProvider from "./components/LoopingSection/loopState";
 import { DrumMachineProvider } from "./components/DrumMachine/drumMachineState";
 import DrumMachine from "./components/DrumMachine/DrumMachine";
 import MasterBoard from "./components/MasterBoard/MasterBoard";
+import SongManager from "./components/SongManager/SongManager";
 import styled from "styled-components";
 
 const App: React.FC = () => {
@@ -20,8 +21,9 @@ const App: React.FC = () => {
         <DrumMachineProvider>
           <GlobalStyle />
           <TopSection>
-            <MasterBoard />
+            <SongManager />
             <DrumMachine />
+            <MasterBoard />
           </TopSection>
           <Synth>
             <BPMSelector />
