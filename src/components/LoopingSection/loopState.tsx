@@ -121,9 +121,26 @@ const LoopProvider: React.FC = ({ children }) => {
   const { stopMetronome, startMetronome } = useMetronome();
 
   useEffect(() => {
+    // Manage Transport
+    if (state.playing) {
+      if (Tone.Transport.state !== "started") {
+        Tone.Transport.start();
+      }
+      Tone.Transport.bpm.value = state.bpm;
+
+      // Ensure loop settings
+      Tone.Transport.loop = true;
+      Tone.Transport.loopStart = "0:0:0";
+      Tone.Transport.loopEnd = "4:0:0";
+    } else {
+      if (Tone.Transport.state === "started") {
+        Tone.Transport.stop();
+      }
+    }
+
+    // Manage Metronome Clicks
     if (state.playing && state.isMetronomeOn) {
-      stopMetronome();
-      startMetronome(state.bpm);
+      startMetronome();
     } else {
       stopMetronome();
     }
