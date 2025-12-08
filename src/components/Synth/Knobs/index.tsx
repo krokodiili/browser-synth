@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useSynth } from "../../state/synth";
+import { useSynth } from "../synthState";
 import Knob from "./Knob";
 import MagnetKnob from "./MagnetKnob";
 

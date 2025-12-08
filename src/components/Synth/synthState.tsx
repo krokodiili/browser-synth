@@ -47,7 +47,16 @@ export type Action =
   | { type: "SELECT_TRACK"; payload: number }
   | { type: "SET_REVERB"; payload: Partial<ReverbSettings> }
   | { type: "SET_DELAY"; payload: Partial<DelaySettings> }
-  | { type: "SET_CHORUS"; payload: Partial<ChorusSettings> };
+  | { type: "SET_CHORUS"; payload: Partial<ChorusSettings> }
+  | {
+      type: "LOAD_SETTINGS";
+      payload: {
+        tracks: { id: number; octave: number; volume: number }[];
+        reverb: ReverbSettings;
+        delay: DelaySettings;
+        chorus: ChorusSettings;
+      };
+    };
 
 const createTrack = (id: number): Track => ({
   id,
@@ -120,6 +129,26 @@ const synthReducer = (state: SynthState, action: Action): SynthState => {
       return {
         ...state,
         chorus: { ...state.chorus, ...action.payload },
+      };
+    case "LOAD_SETTINGS":
+      return {
+        ...state,
+        tracks: state.tracks.map((track) => {
+          const loadedTrack = action.payload.tracks.find(
+            (t) => t.id === track.id
+          );
+          if (loadedTrack) {
+            return {
+              ...track,
+              octave: loadedTrack.octave,
+              volume: loadedTrack.volume,
+            };
+          }
+          return track;
+        }),
+        reverb: action.payload.reverb,
+        delay: action.payload.delay,
+        chorus: action.payload.chorus,
       };
     default:
       return state;
