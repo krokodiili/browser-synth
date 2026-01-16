@@ -5,7 +5,8 @@ import { useLoop } from "../loopState";
 const RecordButton: React.FC = () => {
   const { recording, dispatch } = useLoop();
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    await Tone.start();
     dispatch({
       type: recording ? "STOP_RECORDING" : "START_RECORDING",
     });

@@ -23,22 +23,14 @@ const firstBeatLoop = new Tone.Loop((time) => {
   clickSynth.triggerAttackRelease("G5", "32n", time);
 }, "1n");
 
-const startMetronome = (bpm: number) => {
-  Tone.Transport.bpm.value = bpm;
-  Tone.Transport.start();
+const startMetronome = () => {
   mainLoop.start();
   firstBeatLoop.start();
-
-  Tone.Transport.loop = true;
-  Tone.Transport.loopStart = "0:0:0";
-  Tone.Transport.loopEnd = "4:0:0";
-  console.log("start", Tone.Transport.loop);
 };
 
 const stopMetronome = () => {
   mainLoop.stop();
   firstBeatLoop.stop();
-  Tone.Transport.stop();
 };
 
 const useMetronome = () => {

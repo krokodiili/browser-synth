@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useRef } from "react";
 import * as Tone from "tone";
 import { PolySynth, Reverb, FeedbackDelay, Chorus } from "tone";
 
@@ -159,13 +159,32 @@ const SynthContext = createContext<SynthState>(initialState);
 const SynthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(synthReducer, initialState);
 
-  // Initialize FX Nodes
-  const [reverb] = useState(() => new Reverb());
-  const [delay] = useState(() => new FeedbackDelay());
-  const [chorus] = useState(() => new Chorus());
+  // FX Nodes Ref
+  const fxRef = useRef<{
+    reverb: Reverb;
+    delay: FeedbackDelay;
+    chorus: Chorus;
+  } | null>(null);
 
-  // Setup Audio Graph (One-time setup)
+  // Setup Audio Graph (One-time setup / StrictMode safe)
   useEffect(() => {
+    const reverb = new Reverb();
+    const delay = new FeedbackDelay();
+    const chorus = new Chorus();
+
+    // Initial Settings
+    reverb.decay = state.reverb.decay;
+    reverb.preDelay = state.reverb.preDelay;
+    reverb.wet.value = state.reverb.mix;
+
+    delay.delayTime.value = state.delay.delayTime;
+    delay.feedback.value = state.delay.feedback;
+    delay.wet.value = state.delay.mix;
+
+    chorus.frequency.value = state.chorus.frequency;
+    chorus.depth = state.chorus.depth;
+    chorus.wet.value = state.chorus.mix;
+
     // Chain: Synths -> Chorus -> Delay -> Reverb -> Destination
     chorus.connect(delay);
     delay.connect(reverb);
@@ -179,44 +198,62 @@ const SynthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           type: "sine",
         },
       });
-      // Ensure we don't have multiple connections if this runs again (though it shouldn't)
+      // Ensure we don't have multiple connections if this runs again
       track.synth.disconnect();
       track.synth.connect(chorus);
     });
 
-    Tone.start();
+    fxRef.current = { reverb, delay, chorus };
+
+    // Tone.start() is now handled by user interaction events
 
     return () => {
-      // Dispose logic if needed, though often fine to leave unless component unmounts
-      // reverb.dispose(); delay.dispose(); chorus.dispose();
-      // Since tracks are in state, we might not want to dispose them here?
-      // Actually, if SynthProvider unmounts, we should clean up FX.
       reverb.dispose();
       delay.dispose();
       chorus.dispose();
+      fxRef.current = null;
     };
   }, []);
 
+  // Sync Track Volumes
+  useEffect(() => {
+    state.tracks.forEach(track => {
+      // Avoid setting if not changed? Tone.js handles value updates efficiently.
+      if (track.synth.volume.value !== track.volume) {
+         track.synth.volume.value = track.volume;
+      }
+    });
+  }, [state.tracks]);
+
   // Sync Reverb State
   useEffect(() => {
-    reverb.decay = state.reverb.decay;
-    reverb.preDelay = state.reverb.preDelay;
-    reverb.wet.value = state.reverb.mix;
-  }, [state.reverb, reverb]);
+    const reverb = fxRef.current?.reverb;
+    if (reverb && !reverb.disposed) {
+      reverb.decay = state.reverb.decay;
+      reverb.preDelay = state.reverb.preDelay;
+      reverb.wet.value = state.reverb.mix;
+    }
+  }, [state.reverb]);
 
   // Sync Delay State
   useEffect(() => {
-    delay.delayTime.value = state.delay.delayTime;
-    delay.feedback.value = state.delay.feedback;
-    delay.wet.value = state.delay.mix;
-  }, [state.delay, delay]);
+    const delay = fxRef.current?.delay;
+    if (delay && !delay.disposed) {
+      delay.delayTime.value = state.delay.delayTime;
+      delay.feedback.value = state.delay.feedback;
+      delay.wet.value = state.delay.mix;
+    }
+  }, [state.delay]);
 
   // Sync Chorus State
   useEffect(() => {
-    chorus.frequency.value = state.chorus.frequency;
-    chorus.depth = state.chorus.depth;
-    chorus.wet.value = state.chorus.mix;
-  }, [state.chorus, chorus]);
+    const chorus = fxRef.current?.chorus;
+    if (chorus && !chorus.disposed) {
+      chorus.frequency.value = state.chorus.frequency;
+      chorus.depth = state.chorus.depth;
+      chorus.wet.value = state.chorus.mix;
+    }
+  }, [state.chorus]);
 
 
   const value = {

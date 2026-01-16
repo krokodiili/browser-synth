@@ -25,7 +25,8 @@ const PlayButton = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
 
-  const handleClick = () => {
+  const handleClick = async () => {
+    await Tone.start();
     dispatch({
       type: playing ? "STOP_PLAYING" : "PLAY",
     });
